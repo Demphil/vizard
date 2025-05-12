@@ -1,36 +1,29 @@
-# اسم التطبيق على Fly.io
-app = "vizard-nvv3ja"  # غيّر الاسم إلى اسم التطبيق الخاص بك على Fly.io إن لزم
-
-# المنطقة الجغرافية لتحديد مكان خوادم Fly.io الأقرب لجمهورك
-primary_region = "cdg"  # يمكنك تغييره حسب موقع جمهورك (مثلاً: "nyc" أو "sfo" أو "cdg")
+app = "vizard-clone"  # غيّر الاسم إلى اسم التطبيق الخاص بك على fly.io إذا لزم الأمر
+primary_region = "cdg"  # باريس على سبيل المثال، يمكنك تغييره حسب موقع جمهورك
 
 [build]
-  dockerfile = "Dockerfile"  # تحديد ملف Dockerfile لبناء التطبيق
+  dockerfile = "Dockerfile"  # تأكد من أن المسار صحيح لملف Dockerfile
 
 [env]
-  PYTHONUNBUFFERED = "1"  # لتجنب تخزين البيانات في الذاكرة المؤقتة
+  PYTHONUNBUFFERED = "1"
 
 [experimental]
-  auto_rollback = true  # إعادة التراجع التلقائي في حال حدوث مشكلة أثناء النشر
+  auto_rollback = true
 
 [[services]]
-  internal_port = 8000  # البورت الداخلي الذي يستمع عليه التطبيق
-  protocol = "tcp"  # البروتوكول المستخدم (TCP)
+  internal_port = 8000
+  protocol = "tcp"
 
   [[services.ports]]
-    handlers = ["http"]  # تحديد التعامل مع HTTP
-    port = 80  # البورت 80 للـ HTTP
+    handlers = ["http"]
+    port = 80
 
   [[services.ports]]
-    handlers = ["tls", "http"]  # إضافة TLS للاتصال الآمن
-    port = 443  # البورت 443 للـ HTTPS
+    handlers = ["tls", "http"]
+    port = 443
 
   [[services.tcp_checks]]
-    interval = "15s"  # التحقق من حالة الخادم كل 15 ثانية
-    timeout = "2s"    # المدة المحددة للانتظار قبل انتهاء المهلة
-    grace_period = "5s"  # فترة السماح بعد إعادة التشغيل
-    restart_limit = 0  # عدد محاولات إعادة التشغيل (0 = غير محدود)
-
-# هذا الملف يضمن إعداد التطبيق للنشر على Fly.io باستخدام Docker.
-# لا يوجد هنا ارتباط بـ GitHub Actions
-# يمكنك نشر التطبيق باستخدام flyctl فقط بدون GitHub Actions
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "5s"
+    restart_limit = 0
