@@ -1,30 +1,20 @@
-app = "vizard-1xuxkg"  # تأكد من أن الاسم هنا هو نفسه الذي ترغب في استخدامه في Fly.io
+# استخدم صورة أساسية من Python
+FROM python:3.12-slim
 
-primary_region = "cdg"  # تغيير المنطقة إذا لزم الأمر
+# إعداد دليل العمل
+WORKDIR /app
 
-[build]
-  dockerfile = "Dockerfile"  # تأكد من أن اسم ملف Dockerfile صحيح
+# نسخ ملف متطلبات الحزم
+COPY requirements.txt .
 
-[env]
-  PYTHONUNBUFFERED = "1"
+# تثبيت الحزم
+RUN pip install --no-cache-dir -r requirements.txt
 
-[experimental]
-  auto_rollback = true
+# نسخ جميع الملفات في المجلد
+COPY . .
 
-[[services]]
-  internal_port = 8000
-  protocol = "tcp"
+# تحديد المنفذ الذي سيستمع عليه التطبيق
+EXPOSE 8000
 
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
-
-  [[services.tcp_checks]]
-    interval = "15s"
-    timeout = "2s"
-    grace_period = "5s"
-    restart_limit = 0
+# الأمر لتشغيل التطبيق
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
