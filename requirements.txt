@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pytube
+whisper
+moviepy
+googletrans==4.0.0rc1
+python-multipart
