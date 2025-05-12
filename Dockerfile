@@ -1,29 +1,30 @@
-# استخدم صورة أساسية تدعم Python و ffmpeg
-FROM python:3.10-slim
+app = "vizard-clone"  # تأكد من أن الاسم هنا هو نفسه الذي ترغب في استخدامه في Fly.io
 
-# تثبيت أدوات النظام المطلوبة
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    git \
-    gcc \
-    libsm6 \
-    libxext6 \
-    && apt-get clean
+primary_region = "cdg"  # تغيير المنطقة إذا لزم الأمر
 
-# إعداد مجلد العمل
-WORKDIR /app
+[build]
+  dockerfile = "Dockerfile"  # تأكد من أن اسم ملف Dockerfile صحيح
 
-# نسخ جميع ملفات المشروع
-COPY . .
+[env]
+  PYTHONUNBUFFERED = "1"
 
-# إنشاء بيئة افتراضية وتثبيت المتطلبات
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+[experimental]
+  auto_rollback = true
 
-# فتح المنفذ 8000
-EXPOSE 8000
+[[services]]
+  internal_port = 8000
+  protocol = "tcp"
 
-# أمر التشغيل
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "5s"
+    restart_limit = 0
