@@ -1,0 +1,30 @@
+app = "vizard-clone"  # ✅ غيّر الاسم إلى اسم التطبيق الخاص بك على fly.io إن لزم
+
+primary_region = "cdg"  # باريس مثلاً، يمكنك تغييره حسب موقع جمهورك
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PYTHONUNBUFFERED = "1"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  internal_port = 8000
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "5s"
+    restart_limit = 0
