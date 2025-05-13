@@ -22,8 +22,11 @@ primary_region = "cdg"  # باريس على سبيل المثال، يمكنك �
     handlers = ["tls", "http"]
     port = 443
 
- # [[services.tcp_checks]]
-   # interval = "15s"
-   # timeout = "2s"
-    #grace_period = "5s"
-   # restart_limit = 0
+[[services.http_checks]]
+  interval = "10s"
+  timeout = "2s"
+  grace_period = "5s"
+  method = "get"
+  path = "/"
+  protocol = "http"
+  restart_limit = 0
