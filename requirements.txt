@@ -4,4 +4,4 @@ moviepy
 pytube
 transformers
 torch
-
+whisper
