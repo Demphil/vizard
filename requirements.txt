@@ -3,6 +3,8 @@ uvicorn
 whisper
 pytube
 moviepy
+transformers
 googletrans==4.0.0-rc1
 python-multipart
 jinja2
+torch
