@@ -1,22 +1,18 @@
-# استخدم صورة Python أساسية خفيفة
+# استخدم صورة رسمية تعتمد على Python
 FROM python:3.12-slim
 
-# إعداد العمل داخل الحاوية
+# إعداد مجلد العمل داخل الحاوية
 WORKDIR /app
 
-# نسخ متطلبات الحزم أولاً
-COPY requirements.txt .
+# نسخ ملفات المشروع
+COPY . /app
 
-# تثبيت الحزم في بيئة معزولة
-RUN python -m venv /venv
-ENV PATH="/venv/bin:$PATH"
+# تثبيت المتطلبات
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# نسخ باقي الملفات
-COPY . .
+# فتح المنفذ 8080 (Fly.io يستعمله)
+EXPOSE 8080
 
-# تحديد المنفذ الذي سيستمع عليه التطبيق
-EXPOSE 8000
-
-# الأمر لتشغيل التطبيق باستخدام Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# تشغيل التطبيق باستخدام Uvicorn
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
