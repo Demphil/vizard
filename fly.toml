@@ -1,4 +1,4 @@
-app = "vizard-4flesa"  # غيّر هذا لاسم التطبيق الخاص بك في Fly.io
+app = "vizard"  # غيّر هذا لاسم التطبيق الخاص بك في Fly.io
 
 [build]
 
