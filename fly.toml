@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for vizard-6yt53g on 2025-05-13T02:31:47Z
+# fly.toml app configuration file generated for vizard-tbm44w on 2025-05-13T15:56:07Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'vizard-6yt53g'
+app = 'vizard-tbm44w'
 primary_region = 'cdg'
 
 [build]
